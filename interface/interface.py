@@ -1,7 +1,9 @@
-print ("Diegoeeee")
+import tkinter
+import customtkinter
+
+mainWindown = customtkinter.CTk()
+mainWindown.geometry("470x330")
 
 
-# Este é um projeto simples em Python para gerar senhas aleatórias de diferentes tamanhos. Ele permite que o usuário escolha o comprimento da senha e, em seguida, gera uma combinação aleatória de letras, números e caracteres especiais.
 
-
-
+mainWindown.mainloop()
