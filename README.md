@@ -18,7 +18,7 @@ Este é um simples gerador de senhas aleatórias em Python. Ele cria uma senha s
 
 ## 🛠 Tecnologias utilizadas
 * Python 3
-* Módulos `random` e `string
+* Módulos `random` e `string`
 
 ## 📌 Exemplo de Uso
 
