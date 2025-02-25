@@ -79,7 +79,7 @@ This is a simple random password generator written in Python. It creates a secur
 
 ## 🎯 Contributing
 1. Fork this repository.
-2. Create a new branch: git checkout -b my-improvement 
-3. Make your changes and commit: git commit -m "Improvement: Added input validation"
-4. Push to the repository: git push origin my-improvement 
+2. Create a new branch: `git checkout -b my-improvement`
+3. Make your changes and commit: `git commit -m "Improvement: Added input validation"`
+4. Push to the repository: `git push origin my-improvement`
 5. Open a Pull Request.
