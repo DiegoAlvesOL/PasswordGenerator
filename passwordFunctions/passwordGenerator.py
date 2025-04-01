@@ -1,12 +1,17 @@
 import random
 import string
 
-size = int(input("Enter your password length: "))
+size = int(input("Enter your password Length: "))
 
 def generate_password (size):
+
     characters = string.ascii_letters + string.digits + string.punctuation
-    password = ''.join(random.choice(characters) for _ in range(0, size))
+    password = ""
+
+    for i in range (size):
+        password += random.choice(characters)
     return password
 
-resul = generate_password(size)
-print("Your passwoord is : ", resul)
+result = generate_password(size)
+
+print("Your password is: ", result)
