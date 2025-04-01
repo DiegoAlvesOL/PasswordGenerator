@@ -9,7 +9,7 @@ def generate_password (size):
     password = ""
 
     for i in range (size):
-        password += random.choice(characters)
+        password = password + random.choice(characters)
     return password
 
 result = generate_password(size)
