@@ -19,7 +19,7 @@ def copy_password():
 mainWindown = customtkinter.CTk()
 # mainWindown.columnconfigure(0, weight=1)
 # mainWindown.columnconfigure(1, weight=0)
-mainWindown.geometry("500x280")
+mainWindown.geometry("460x280")
 mainWindown.title("LockIt")
 
 text = customtkinter.CTkLabel(mainWindown,
@@ -56,18 +56,21 @@ butto_frame.grid(row=3, column=0, columnspan=3, pady=10)
 # Botão para gerar a senha
 # Button to generate the password
 generate_button = customtkinter.CTkButton(butto_frame, text="Generate Password",
+                                          corner_radius=20,
                                           command = update_password)
 generate_button.grid(row=0, column=0, padx=5)
 
 # Botão para copiar senha:
 # Button to copy the password
 copy_button = customtkinter.CTkButton(butto_frame, text="Copy Password",
+                                      corner_radius=20,
                                       command= copy_password)
 copy_button.grid(row=0, column=1,padx=5)
 
 # Botão para atualizar a senha
 # Update password button
 refresh_button = customtkinter.CTkButton(butto_frame, text="Reload",
+                                         corner_radius=20,
                                          command= update_password)
 refresh_button.grid(row=0, column=3, padx=5)
 
