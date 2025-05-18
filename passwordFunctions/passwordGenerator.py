@@ -4,6 +4,7 @@ import string
 # length = int(input("Enter your password Length: "))
 
 def generate_password (length):
+    characters = ""
 
     characters = string.ascii_letters + string.digits + string.punctuation
     password = ""
