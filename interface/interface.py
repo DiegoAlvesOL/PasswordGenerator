@@ -2,8 +2,9 @@ from sys import path_importer_cache
 
 import customtkinter
 from customtkinter import CTkSlider, CTkSwitch
-
 from passwordFunctions.passwordGenerator import generate_password
+from models.password_entry import passwordEntry
+
 
 # Função para gerar a senha e atualizar o campo de exibição
 # Function to generate the password and update the display field
@@ -23,6 +24,23 @@ def copy_password():
     password = passwordDisplay.cget("text")
     mainWindown.clipboard_clear()
     mainWindown.clipboard_append(password)
+
+
+
+# Funão para pegar as informações digitadas pelo usuário e enviar para classe passwordEntry no arquivo password_entry.py
+def save_password():
+    item = item_name.get()
+    user = user_entry.get()
+    site = website_address.get()
+    password = passwordDisplay.cget("text")
+    if not user or not site:
+        passwordDisplay.configure(text= "⚠️ Please, entre with email and address of web site to save it")
+        return
+
+    salve_password = passwordEntry(item, user, site, password)
+    print(save_password)
+
+
 
 mainWindown = customtkinter.CTk()
 # mainWindown.columnconfigure(0, weight=1)
@@ -47,8 +65,11 @@ swtich_frame = customtkinter.CTkFrame(mainWindown)
 swtich_frame.grid(row=4,column=0,columnspan=3,padx=5,pady=5)
 
 # Frame botão Generate Password
-bt_generate_password = customtkinter.CTkFrame(mainWindown, fg_color="transparent")
-bt_generate_password.grid(row=5,column=0,columnspan=3,padx=5,pady=5)
+butto_frame_generate = customtkinter.CTkFrame(mainWindown, fg_color="transparent")
+butto_frame_generate.grid(row=5,column=0,columnspan=3,padx=5,pady=5)
+# Frame para bosão de salvar a senha
+butto_frame_save = customtkinter.CTkFrame(mainWindown,fg_color="transparent")
+butto_frame_save.grid(row=11,column=0,columnspan=3,padx=5,pady=5)
 
 
 text = customtkinter.CTkLabel(mainWindown,
@@ -114,7 +135,7 @@ swtich_symbols.grid(row=2,column=1,columnspan=2,padx=5)
 
 # Botão para gerar a senha
 # Button to generate the password
-generate_button = customtkinter.CTkButton(bt_generate_password, text="Generate Password",
+generate_button = customtkinter.CTkButton(butto_frame_generate, text="Generate Password",
                                           corner_radius=5,
                                           command = update_password)
 generate_button.grid(row=0,column=1,padx=2,pady=2)
@@ -143,13 +164,19 @@ user_entry = customtkinter.CTkEntry(mainWindown, placeholder_text="Enter with em
                                     border_color="#003554")
 user_entry.grid(row=9,column=0,columnspan=3,padx=5,pady=1)
 
-webe_site_address = customtkinter.CTkEntry(mainWindown, placeholder_text="Web address",
+website_address = customtkinter.CTkEntry(mainWindown, placeholder_text="Web address",
                                            text_color="White",
                                            width=300,
                                            justify="left",
                                            fg_color="#051923",
                                            border_color="#003554")
-webe_site_address.grid(row=10,column=0,columnspan=3,padx=5,pady=1)
+website_address.grid(row=10,column=0,columnspan=3,padx=5,pady=1)
+
+save_button = customtkinter.CTkButton(butto_frame_save, text="Save",
+                                      corner_radius=5,
+                                      command= save_password)
+save_button.grid(row=11,column=1,padx=1,pady=1)
+
 
 # length_entry.insert(0,"16")
 
