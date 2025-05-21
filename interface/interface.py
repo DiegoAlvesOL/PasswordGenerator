@@ -1,8 +1,7 @@
-from sys import path_importer_cache
 import customtkinter
 from customtkinter import CTkSlider, CTkSwitch
 from passwordFunctions.passwordGenerator import generate_password
-from models.password_entry import passwordEntry
+from models.password_entry import PasswordEntry
 from db.database import insert_password, create_table
 
 
@@ -18,16 +17,16 @@ def update_password():
     new_password = generate_password(length, use_digits,use_letters,use_symbols)
     passwordDisplay.configure(text=new_password)
 
-# Função para copiar a senha
-# Function to copy the password to clipboard
+# Função para copiar a senha exibida para a área de transferência (clipboard)
+# Function to copy the displayed password to clipboard
 def copy_password():
     password = passwordDisplay.cget("text")
     mainWindow.clipboard_clear()
     mainWindow.clipboard_append(password)
 
 
-
-# Essa função pegar as informações digitadas pelo usuário e enviar para classe passwordEntry no arquivo password_entry.py
+# Função para salvar a senha gerada com os dados informados pelo usuário
+# Function to save the generated password with user input data
 def save_password():
     item = item_name.get()
     user = user_entry.get()
@@ -36,13 +35,14 @@ def save_password():
     if not user or not site:
         passwordDisplay.configure(text= "⚠️ Please, entre with email and address of web site to save it")
         return
-    save_password = passwordEntry(item,user,site,password)
+    save_password = PasswordEntry(item,user,site,password)
     save_password.save_to_db()
     passwordDisplay.configure(text="✅ Password saved successfully!")
     print(save_password)
 
 
-
+# Inicializa a janela principal do aplicativo
+# Initialize the main application window
 mainWindow = customtkinter.CTk()
 # mainWindow.columnconfigure(0, weight=1)
 # mainWindow.columnconfigure(1, weight=0)
@@ -51,24 +51,35 @@ mainWindow.title("LockIt")
 mainWindow.configure(fg_color="#051923")
 
 
-# Todos os frames do App estão alocados aqui para facilitar a leitura todos os frames foram organizados de cima para baixo.
+# === Criação dos frames da interface ===
+# === Creating the interface frames ===
 
-# Este frame é dedicado ao Display da senha.
+# Frame onde a senha gerada será exibida
+# Frame where the generated password will be displayed
 display_frame = customtkinter.CTkFrame(mainWindow, fg_color="#003554")
 display_frame.grid(row=1, column=0, columnspan=3,padx=10, pady=10)
 
-# Este frame é dedicado container dedicado ao tamaho da senha.
+
+# Frame que contém o slider de tamanho da senha
+# Frame containing the password length slider
 slide_frame = customtkinter.CTkFrame(mainWindow)
 slide_frame.grid(row=3,column=0,columnspan=3,padx=10,pady=10)
 
-# Frame dedicado ao aos botões de swtich
+
+# Frame com os switches para escolher tipo de caracteres
+# Frame with switches to select character types
 switch_frame = customtkinter.CTkFrame(mainWindow)
 switch_frame.grid(row=4,column=0,columnspan=3,padx=5,pady=5)
 
-# Frame botão Generate Password
+
+# Frame do botão para gerar senha
+# Frame for the "generate password" button
 butto_frame_generate = customtkinter.CTkFrame(mainWindow, fg_color="transparent")
 butto_frame_generate.grid(row=5,column=0,columnspan=3,padx=5,pady=5)
-# Frame para bosão de salvar a senha
+
+
+# Frame do botão para salvar senha
+# Frame for the "save password" button
 butto_frame_save = customtkinter.CTkFrame(mainWindow,fg_color="transparent")
 butto_frame_save.grid(row=11,column=0,columnspan=3,padx=5,pady=5)
 
@@ -77,6 +88,7 @@ text = customtkinter.CTkLabel(mainWindow,
                               text="🔒 LockIt",
                               font=("Arial",24,"bold"))
 text.grid(row=0, column=0, columnspan=3, pady =10, sticky="n")
+
 
 # Campo de exibição da senha
 # Password display field
@@ -88,7 +100,9 @@ passwordDisplay = customtkinter.CTkLabel(display_frame,
                                          justify="center")
 passwordDisplay.grid(row=0, column=0, padx=5, pady=5)
 
-# Botão para copiar a senha exibidao no passwordDisplay
+
+# Botão para copiar a senha
+# Button to copy the password
 copy_button = customtkinter.CTkButton(mainWindow, text="Copy this password",
                                       corner_radius=5,
                                       command= copy_password)
@@ -101,7 +115,9 @@ refresh_button = customtkinter.CTkButton(mainWindow, text="Reload",
                                          command= update_password)
 refresh_button.grid(row=2, column=1, padx=2,pady=2)
 
-# frame para linhar o layout do slide frame.
+
+# Slider para definir o tamanho da senha
+# Slider to define password length
 length_slider = CTkSlider(slide_frame,from_=4, to=40,
                           button_color="#00a6fb",
                           progress_color="#003554")
@@ -120,7 +136,8 @@ length_max = customtkinter.CTkLabel(slide_frame,
                                     text_color="White")
 length_max.grid(row=0,column=3,padx=1,pady=1)
 
-# 
+# === Switch para ativar números, letras e símbolos na senha ===
+# === Switch to include digits, letters ans symbols in password ===
 switch_numbers = CTkSwitch(switch_frame,
                            text="Digits (e.g. 543)")
 switch_numbers.grid(row=0,column=1,columnspan=2,padx=5)
@@ -178,6 +195,8 @@ save_button = customtkinter.CTkButton(butto_frame_save, text="Save",
                                       command= save_password)
 save_button.grid(row=11,column=1,padx=1,pady=1)
 
+# Cria a tabela no banco de dados se ainda não existir. Chama a função create_table() do arquivo database.py
+# Create the database table if it does not exist. Calls the create_table() function from the database.py file
 create_table()
 
 # length_entry.insert(0,"16")

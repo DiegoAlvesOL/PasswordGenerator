@@ -1,12 +1,13 @@
 import sqlite3
 from pathlib import Path
 from datetime import datetime
-from time import strftime
 
-# Cria o caminho do banco (no mesmo local do projeto)
+# Caminho do banco de dados (na mesma pasta do projeto)
+# Database path (in the same project folder)
 db_path = Path(__file__).parent / "lockit.db"
 
-# Função para criar a tabela
+# Criação da tabela 'passwords' caso não exista
+# Creates the 'passwords' table if it doesn't exist
 def create_table():
     connection = sqlite3.connect(db_path)
     cursor = connection.cursor()
@@ -22,6 +23,8 @@ def create_table():
     connection.commit()
     connection.close()
 
+# Função que insere uma nova senha no banco de dados
+# Inserts a new password record into the database
 def insert_password(item, user, site, password):
     connection = sqlite3.connect(db_path)
     cursor = connection.cursor()
